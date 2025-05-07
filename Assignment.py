@@ -94,7 +94,7 @@ def deposit_money():
     accounts[acc_no]["balance"] += amount
     accounts[acc_no]["transactions"].append(f"{datetime}Deposit: +{amount}")
     save_accounts()
-    print("Deposit successful.")
+    print("======Deposit successful.======")
     print(f"New Balance: {accounts[acc_no]['balance']}")
 #withdrawal
 def withdraw_money():
@@ -117,7 +117,7 @@ def withdraw_money():
     accounts[acc_no]["balance"] -= amount
     accounts[acc_no]["transactions"].append(f"{datetime}Withdrawal: -{amount}")
     save_accounts()
-    print("Withdrawal successful.")
+    print("======Withdrawal successful.======")
     print(f"New Balance: {accounts[acc_no]['balance']}")
 #check balance
 def check_balance():
@@ -168,7 +168,7 @@ def transfer_money():
     accounts[sender]["transactions"].append(f"Transfer to {receiver}: -{amount}")
     accounts[receiver]["transactions"].append(f"Transfer from {sender}: +{amount}")
     save_accounts()
-    print("Transfer successful.")
+    print("======Transfer successful.======")
 
 #main
 def main():
