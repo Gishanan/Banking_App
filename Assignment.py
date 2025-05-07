@@ -33,6 +33,10 @@ def get_datetime():
 #create account
 def create_account():
     name = input("Enter account holder name: ").strip()
+    while not name:
+        print("name can not be emty")
+        name=input("enter account holder name:").strip()
+        
     while True:
         try:
             balance = float(input("Enter initial balance: "))
