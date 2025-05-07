@@ -1,9 +1,49 @@
 import random
+import os
+from getpass import getpass
 
-userAccounts = {}
+accounts = {}
 
-def generate_account_number():
+ACCOUNT_FILE= "account.txt"
+
+#load accounts from file
+def creates_account():
+      if not os.path.exists(ACCOUNT_FILE):
+            return
+      with open(ACCOUNT_FILE,"r") as f:
+            for line in f:
+                  parts = line.strip().split(",")
+                  if len(parts) >= 6:
+                        user_id,acc_no,balance,password,tx_str = parts
+                        transactions = tx_str.split("|") if tx_str else[]
+                        account[acc_no] = {
+                              "user_id" : user_id,
+                              "name" : name,
+                              "balance" : float(balance),
+                              "password" : password,
+                              "transactions" : transactions
+                        }
+
+# save account to file
+def save_account():
+      with open(ACCOUNT_FILE, "w") as f:
+            for acc_no, acc in accounts.item():
+                  tx_str = "|" .join(acc["transactions"])
+                  f.write(f"{acc["user_id"]},{acc_no},{acc["name"]},{acc["balance"]},{acc["password"]},{tx_str}\n")
+
+#generats user id
+def create_account_id():
+      if not os.path.exists(ACCOUNT_FILE) or os.path.getsize(ACCOUNT_FILE) == 0:
+            return "g001"
+            with open(ACCOUNT_FILE, "r") as f:
+                  last_line = f.readlines()[-1:])
+                  last_id = int(last_line.split(",")[0][1:])
+                  return f"g{last_id + 1:03}"
+                  
+                        
+            
       #Generate account number starts with 77(unique bank code)
+def generate_account_number():
       while True:
         random_part = random.randint(1000000, 9999999) 
         account_number = "77" + str(random_part)
@@ -11,31 +51,34 @@ def generate_account_number():
         if account_number not in userAccounts:
             return account_number
 
-def create_account():
-   #Create new bank account
-    account_number = generate_account_number()
-    while account_number in userAccounts:
-        account_number = generate_account_number()
 
-    account_holder_name = input("Enter account holder name: ").strip()
+def create_account():
+    name = input("Enter account holder name: ").strip()
     while not account_holder_name:
         print("Name cannot be empty.")
-        account_holder_name = input("Enter account holder name: ").strip()
+        name = input("Enter account holder name: ").strip()
 
     while True:
-        try:
-            initial_balance_str = input("Enter initial balance: ")
-            initial_balance = float(initial_balance_str)
-            if initial_balance >= 0:
-                break
-            else:
-                print("Initial balance can't be less than 0.")
-        except ValueError:
-            print("Invalid input. Please enter a valid number for the balance.")
+      try:
+            balace = float(input("enter initial balance:"))
+            if balance < 0:
+                  print("balance must be non-negative.")
+                  continue
+            break
+      except ValueError:
+            print("please enter a valid number.")
+   while True:
+         password = getpass("set a pasword:")
+         confirm = getpass("confirm password:")
+         if password == confirm:
+               break
+         else:
+               print("password do not match.")
+               
 
-    userAccounts[account_number] = (account_holder_name, initial_balance, [])
-    print(f"Account created successfully. Account Number: {account_number}")
 
+
+  
 def deposit_money():
     #Deposits money into an existing account.
     account_number = input("Enter account number: ")
@@ -148,5 +191,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-hi hello
 
