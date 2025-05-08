@@ -31,8 +31,8 @@ def save_accounts():
             tx_str = "|".join(acc["transactions"])
             f.write(f"{acc['user_id']},{acc_no},{acc['name']},{acc['balance']},{acc['password']},{tx_str}\n")
 
-# Generate next user ID
-def create_account_next_id():
+# Generate  user ID
+def create_account_id():
     if not os.path.exists(ACCOUNT_FILE) or os.path.getsize(ACCOUNT_FILE) == 0:
         return "u001"
     with open(ACCOUNT_FILE, "r") as f:
